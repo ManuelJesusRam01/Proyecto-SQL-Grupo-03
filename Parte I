@@ -1,0 +1,109 @@
+IF OBJECT_ID('tb_Canal') is not null
+	drop table tb_Canal
+go	
+create table tb_Canal
+(
+	id_Canal			char (2)		not null,
+	Descrip_Canal		nvarchar(50)	not null
+)
+go
+
+
+
+IF OBJECT_ID('tb_ger_regional') is not null
+	drop table tb_ger_regional
+go	
+create table tb_ger_regional
+(
+	id_ger_reg				varchar (3)		not null,
+	Descrip_Ger_regional	nvarchar(50)	not null
+)
+go
+
+
+
+IF OBJECT_ID('tb_Oficina') is not null
+	drop table tb_Oficina
+go	
+create table tb_Oficina
+(
+	id_ofi					char (2)		not null,
+	Descrip_Of				nvarchar(50)	not null
+)
+go
+
+
+
+IF OBJECT_ID('tb_Territorio') is not null
+	drop table tb_Territorio
+go	
+create table tb_Territorio
+(
+	id_Terri					varchar (7)		not null,
+	Descrip_territ			nvarchar(50)	not null
+)
+go
+
+
+IF OBJECT_ID('tb_Org_ventas') is not null
+	drop table tb_Org_ventas
+go	
+create table tb_Org_ventas
+(
+	id_Org_venta			char (4)		not null,
+	Descrip_Org_Vtas		nvarchar(50)	not null
+)
+go
+
+
+
+
+IF OBJECT_ID('tb_cod_Cliente') is not null
+	drop table tb_cod_Cliente
+go	
+create table tb_cod_Cliente
+(
+	Codigo_cliente			char (7)		not null,
+	Nombre					nvarchar(50)	not null
+				
+)
+
+go
+
+
+IF OBJECT_ID('tb_Prov') is not null
+	drop table tb_Prov
+go	
+create table tb_Prov
+(
+	Factura_Sunat		varchar (20)	not null,
+	Importe				decimal (10,2)  not null,
+	Fecha_Doc			Date			not null,
+	Fecha_Vencim		date			not null,
+	Codigo_cliente		char (7)		not null,
+	id_Canal			char (2)		not null,
+	id_ger_reg			varchar (3)		not null,
+	id_ofi				char (2)		not null,
+	id_Terri			varchar (7)		not null,
+	id_Org_venta		char (4)		not null
+
+)
+go
+
+
+Alter table tb_Canal add constraint pk_tb_Canal_id_Canal primary key (id_Canal)
+Alter table tb_ger_regional add constraint pk_tb_ger_regional_id_ger_reg primary key (id_ger_reg)
+Alter table tb_Oficina add constraint pk_tb_Oficina_id_ofi primary key (id_ofi)
+Alter table tb_Territorio add constraint pk_tb_Territorio_id_Terri primary key (id_Terri)
+Alter table tb_Org_ventas add constraint pk_tb_Org_ventas_id_Org_venta primary key (id_Org_venta)
+Alter table tb_cod_Cliente add constraint pk_tb_cod_Cliente_Codigo_clientea primary key (Codigo_cliente)
+Alter table tb_Prov add constraint pk_tb_Prov_Factura_Sunat primary key (Factura_Sunat, Codigo_cliente, id_Canal, id_ger_reg, id_ofi, id_Terri, id_Org_venta)
+
+alter table tb_Prov add constraint fk_tb_Prov_tb_Canal foreign key (id_Canal) references tb_Canal (id_Canal)
+alter table tb_Prov add constraint fk_tb_Prov_tb_ger_regional foreign key (id_ger_reg) references tb_ger_regional (id_ger_reg)
+alter table tb_Prov add constraint fk_tb_Prov_tb_Oficina foreign key (id_ofi) references tb_Oficina (id_ofi)
+alter table tb_Prov add constraint fk_tb_Prov_tb_Territorio foreign key (id_Terri) references tb_Territorio (id_Terri)
+alter table tb_Prov add constraint fk_tb_Prov_tb_Org_ventas foreign key (id_Org_venta) references tb_Org_ventas (id_Org_venta)
+alter table tb_Prov add constraint fk_tb_Prov_tb_cod_Cliente foreign key (Codigo_cliente) references tb_cod_Cliente (Codigo_cliente)
+
+go
